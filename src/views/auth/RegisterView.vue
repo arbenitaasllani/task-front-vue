@@ -55,7 +55,6 @@ async function handleSubmit(){
 
   } catch (e) {
     formIsValid.value = false;
-    // error.value = e.response.data.error.message;
     console.log(e)
   }
 
@@ -73,24 +72,15 @@ async function handleSubmit(){
 
 
 
-        <!-- FirstName input -->
-
-
-        <!-- LastName input -->
-
-
-        <!-- email input -->
         <div class="mb-3">
           <input type="email" class="form-control" id="Username" aria-describedby="emailHelp"
                  placeholder=" email"  v-model.trim="formData.email">
         </div>
 
-        <!-- Password input -->
         <div class="mb-3">
           <input type="password" class="form-control" id="password" placeholder="password"  v-model.trim="formData.password">
         </div>
 
-        <!-- Submit  -->
         <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Register</button></div>
 
 

@@ -5,8 +5,8 @@ import RegisterView from "@/views/auth/RegisterView.vue";
 import LogInView from "@/views/auth/LogInView.vue";
 import EditTask from "@/components/tasks/EditTask.vue";
 import AddTask from "@/views/AddTask.vue";
-// import ProfileView from "@/views/ProfileView.vue";
-// import AddCashOrExpensesView from "@/views/AddCashOrExpensesView.vue";
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,11 +54,9 @@ const router = createRouter({
 router.beforeEach((to, from) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
+
         return {
             name: 'login',
-            // save the location we were at to come back later
             query: {redirect: to.fullPath},
         }
     } else if (!to.meta.requiresAuth && authStore.isLoggedIn) {

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import {authenticationService} from "@/services/client.js";
 import { computed, ref } from 'vue';
-import {jwtDecode} from 'jwt-decode'; // Corrected import statement
+import {jwtDecode} from 'jwt-decode';
 
 export const useAuthStore = defineStore('auth', () => {
     const token = ref(localStorage.getItem('token'));
@@ -15,17 +15,17 @@ export const useAuthStore = defineStore('auth', () => {
             }
         } catch (error) {
             console.error('Login failed:', error);
-            throw error; // You may want to handle errors appropriately in your application
+            throw error;
         }
     }
 
     async function signUp(registerUser) {
         try {
             const response = await authenticationService.register( registerUser);
-            // Handle response if needed
+
         } catch (error) {
             console.error('Sign up failed:', error);
-            throw error; // Again, handle errors as per your application's requirements
+            throw error;
         }
     }
 

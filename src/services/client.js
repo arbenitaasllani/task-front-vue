@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080'; // Define a single base URL for both services
+const BASE_URL = 'http://localhost:8080';
 
-// Define AuthenticationService class
+
 class AuthenticationService {
     register(data) {
         return axios.post(`${BASE_URL}/api/auth/register`, data);
@@ -13,7 +13,7 @@ class AuthenticationService {
     }
 }
 
-// Define TaskService class
+
 class TaskService {
     getAllTasks() {
         return axios.get(`${BASE_URL}/task`);
@@ -39,6 +39,6 @@ class TaskService {
     }
 }
 
-// Export instances of services
+
 export const taskService = new TaskService();
 export const authenticationService = new AuthenticationService();

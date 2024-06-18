@@ -17,7 +17,6 @@ const submitForm = async () => {
   try {
     await taskService.addTask(task);
     console.log('Task submitted:', task);
-    // Navigate back to the home view
     await router.push('/');
   } catch (error) {
     console.error('Failed to add task:', error);

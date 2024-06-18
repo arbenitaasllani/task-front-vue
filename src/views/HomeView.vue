@@ -2,10 +2,10 @@
   <div>
     <h1>Tasks</h1>
     <div v-if="tasks.length === 0">Loading...</div>
-    <div v-else>
+    <div class="container mt-4 " v-else>
       <div class="row">
-        <div class="col-md-6" v-for="task in tasks" :key="task.id">
-          <task-item :task="task" />
+        <div class="col-md-6 mb-3" v-for="task in tasks" :key="task.id">
+          <TaskItem :task="task" @taskDeleted="removeTask" />
         </div>
       </div>
     </div>
@@ -14,8 +14,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { taskService } from '@/services/client.js';
-import TaskItem from '@/components/tasks/TaskItem.vue';
+import TaskItem from "@/components/tasks/TaskItem.vue";
+import {taskService} from "@/services/client.js";
 
 const tasks = ref([]);
 
@@ -24,25 +24,16 @@ const fetchTasks = async () => {
     const response = await taskService.getAllTasks();
     tasks.value = response.data;
   } catch (error) {
-    console.error('There was an error fetching the tasks!', error);
+    console.error('Error fetching tasks:', error);
   }
 };
 
-onMounted(() => {
-  fetchTasks();
-});
-</script>
-
-<script>
-import TaskItem from '@/components/tasks/TaskItem.vue';
-
-export default {
-  components: {
-    TaskItem
-  }
+const removeTask = (taskId) => {
+  tasks.value = tasks.value.filter(task => task.id !== taskId);
 };
+
+onMounted(fetchTasks);
 </script>
 
-<style>
-/* Add any styles you need here */
+<style scoped>
 </style>

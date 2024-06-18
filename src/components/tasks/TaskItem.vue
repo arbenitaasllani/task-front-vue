@@ -1,3 +1,31 @@
+<script setup>
+import { toRefs } from 'vue';
+import {taskService} from "@/services/client.js";
+
+// Getting props and context
+const props = defineProps({
+  task: {
+    type: Object,
+    required: true
+  }
+});
+
+const emit = defineEmits(['taskDeleted']);
+
+// Destructuring task from props
+const { task } = toRefs(props);
+
+const deleteTask = async () => {
+  try {
+    await taskService.deleteTask(task.value.id);
+    console.log('Task deleted successfully');
+    emit('taskDeleted', task.value.id);
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
+};
+</script>
+
 <template>
   <div class="col-md-6 mb-3">
     <div class="task-item card">
@@ -15,23 +43,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    task: {
-      type: Object,
-      required: true
-    }
-  },
-  methods: {
-    deleteTask() {
-      console.log('Delete task:', this.task);
-      // Implement deletion logic here
-    }
-  }
-};
-</script>
 
 <style scoped>
 .task-item {
