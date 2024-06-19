@@ -1,8 +1,8 @@
+<!-- TaskItem.vue -->
 <script setup>
 import { toRefs } from 'vue';
-import {taskService} from "@/services/client.js";
+import { taskService } from "@/services/client.js";
 
-// Getting props and context
 const props = defineProps({
   task: {
     type: Object,
@@ -11,8 +11,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['taskDeleted']);
-
-// Destructuring task from props
 const { task } = toRefs(props);
 
 const deleteTask = async () => {

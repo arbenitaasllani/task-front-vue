@@ -1,3 +1,4 @@
+<!-- EditTask.vue -->
 <template>
   <div>
     <h1>Edit Task</h1>
@@ -27,71 +28,53 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { reactive, onMounted } from 'vue';
 import { taskService } from '@/services/client.js';
 import { useRoute, useRouter } from 'vue-router';
 
-export default {
-  props: {
-    id: {
-      type: String,
-      required: false
+const route = useRoute();
+const router = useRouter();
+
+const editedTask = reactive({
+  taskName: '',
+  description: '',
+  status: '',
+  dateAdded: '',
+  estimatedFinishDate: ''
+});
+
+const fetchTaskDetails = async () => {
+  const taskId = route.params.taskId;
+  if (taskId) {
+    try {
+      const response = await taskService.getTaskById(taskId);
+      Object.assign(editedTask, response.data);
+    } catch (error) {
+      console.error('Error fetching task details:', error);
     }
-  },
-  setup(props) {
-    const route = useRoute();
-    const router = useRouter();
-
-    const editedTask = reactive({
-      taskName: '',
-      description: '',
-      status: '',
-      dateAdded: '',
-      estimatedFinishDate: ''
-    });
-
-    const fetchTaskDetails = () => {
-      if (props.id) {
-        taskService.getTaskById(props.id)
-            .then(response => {
-              Object.assign(editedTask, response.data);
-            })
-            .catch(error => {
-              console.error('Error fetching task details:', error);
-            });
-      } else {
-        console.error('No task id provided.');
-      }
-    };
-
-    const updateTask = () => {
-      const id = route.params.taskId;
-
-      if (!id) {
-        console.error('No task id provided.');
-        return;
-      }
-
-      taskService.updateTask(id, editedTask)
-          .then(response => {
-            console.log('Task updated successfully:', response.data);
-            // editedTask = { ...response.data };
-            router.push('/');
-          })
-          .catch(error => {
-            console.error('Error updating task:', error);
-          });
-    };
-
-    onMounted(fetchTaskDetails);
-
-    return {
-      editedTask,
-      updateTask
-    };
+  } else {
+    console.error('No task id provided.');
   }
 };
+
+const updateTask = async () => {
+  const taskId = route.params.taskId;
+  if (!taskId) {
+    console.error('No task id provided.');
+    return;
+  }
+
+  try {
+    const response = await taskService.updateTask(taskId, editedTask);
+    console.log('Task updated successfully:', response.data);
+    router.push('/');
+  } catch (error) {
+    console.error('Error updating task:', error);
+  }
+};
+
+onMounted(fetchTaskDetails);
 </script>
 
 <style>

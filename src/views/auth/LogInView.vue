@@ -52,7 +52,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div  style="background-color : #ebf2fa ; height : 100vh ; width: 100%" >
+  <div  style="background-color : #f9f9f9 ; height : 100vh ; width: 100%" class="container" >
 
     <div class="col-md-6 offset-md-3">
 
@@ -85,6 +85,15 @@ async function handleSubmit() {
 
 <style scoped>
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+  width: 100%;
+}
+
 
 .btn-color{
   background-color: #0e1c36;
@@ -97,13 +106,6 @@ async function handleSubmit() {
   color: #0e1c36;
   border: 2px solid #0e1c36;
 }
-
-.profile-image-pic{
-  height: 200px;
-  width: 200px;
-  object-fit: cover;
-}
-
 
 a{
   text-decoration: none;

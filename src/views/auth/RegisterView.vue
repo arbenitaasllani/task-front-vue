@@ -63,9 +63,9 @@ async function handleSubmit(){
 </script>
 
 <template>
-  <div  style="background-color : #ebf2fa ; height : 100vh ; width: 100%" >
+  <div  style="background-color : #f9f9f9 ; height : 100vh ; width: 100%" >
 
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-6 offset-md-3 ">
 
       <form @submit.prevent="handleSubmit">
 
