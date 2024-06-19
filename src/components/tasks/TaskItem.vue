@@ -1,32 +1,3 @@
-<template>
-  <div class="col-md-12 mb-1">
-    <div class="task-item card">
-      <h4 class="card-header bg-light-gray text-white">{{ task.taskName }}</h4>
-      <div class="card-body">
-        <p class="card-text">{{ task.description }}</p>
-        <p :class="[statusClass]">Status: {{ task.status }}</p>
-        <p class="card-text">Date Added: {{ task.dateAdded }}</p>
-        <p class="card-text">Estimated Finish Date: {{ task.estimatedFinishDate }}</p>
-        <div class="d-grid gap-2">
-          <router-link :to="'/edit/' + task.id" class="btn btn-soft-primary">Edit</router-link>
-          <button class="btn btn-soft-danger mt-2" @click="showConfirmation = true">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Confirmation Modal -->
-  <div v-if="showConfirmation" class="confirmation-modal">
-    <div class="modal-content">
-      <p>Are you sure you want to delete the task?</p>
-      <div class="modal-buttons">
-        <button class="btn btn-soft-danger" @click="confirmDelete">Yes</button>
-        <button class="btn btn-soft-primary" @click="cancelDelete">No</button>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { toRefs, computed, ref } from 'vue';
 import { taskService } from "@/services/client.js";
@@ -50,7 +21,6 @@ const statusClass = computed(() => {
   return '';
 });
 
-// Reactive variable to control the visibility of the confirmation modal
 let showConfirmation = ref(false);
 
 const confirmDelete = async () => {
@@ -58,17 +28,47 @@ const confirmDelete = async () => {
     await taskService.deleteTask(task.value.id);
     console.log('Task deleted successfully');
     emit('taskDeleted', task.value.id);
-    showConfirmation.value = false; // Close the confirmation dialog after deletion
-    router.push('/'); // Redirect to task list or home page
+    showConfirmation.value = false;
+    router.push('/');
   } catch (error) {
     console.error('Error deleting task:', error);
   }
 };
 
 const cancelDelete = () => {
-  showConfirmation.value = false; // Close the confirmation dialog
+  showConfirmation.value = false;
 };
 </script>
+
+<template>
+  <div class="col-md-12 mb-1">
+    <div class="task-item card">
+      <h4 class="card-header bg-light-gray text-white">{{ task.taskName }}</h4>
+      <div class="card-body">
+        <p class="card-text">{{ task.description }}</p>
+        <p :class="[statusClass]">Status: {{ task.status }}</p>
+        <p class="card-text">Date Added: {{ task.dateAdded }}</p>
+        <p class="card-text">Estimated Finish Date: {{ task.estimatedFinishDate }}</p>
+        <div class="d-grid gap-2">
+          <router-link :to="'/edit/' + task.id" class="btn btn-soft-primary">Edit</router-link>
+          <button class="btn btn-soft-danger mt-2" @click="showConfirmation = true">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div v-if="showConfirmation" class="confirmation-modal">
+    <div class="modal-content">
+      <p>Are you sure you want to delete the task?</p>
+      <div class="modal-buttons">
+        <button class="btn btn-soft-danger" @click="confirmDelete">Yes</button>
+        <button class="btn btn-soft-primary" @click="cancelDelete">No</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
 
 <style scoped>
 .task-item {
@@ -117,18 +117,18 @@ const cancelDelete = () => {
   color: #343a40;
 }
 
-/* Confirmation Modal Styles */
+
 .confirmation-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Ensure modal is on top of other content */
+  z-index: 999;
 }
 
 .modal-content {

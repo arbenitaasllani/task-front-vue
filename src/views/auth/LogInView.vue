@@ -1,28 +1,3 @@
-<template>
-  <div class="container">
-    <div class="col-md-6">
-      <h3 class="text-center mt-4">Log In</h3>
-      <form @submit.prevent="handleSubmit" class="mt-5">
-        <div class="mb-3">
-          <input type="email" class="form-control" id="Username" placeholder="Email" v-model.trim="formData.email">
-        </div>
-
-        <div class="mb-3">
-          <input type="password" class="form-control" id="password" placeholder="Password" v-model.trim="formData.password">
-        </div>
-
-        <div class="text-center">
-          <button type="submit" class="btn btn-color px-5 w-100">Login</button>
-        </div>
-
-        <div class="form-text text-center mt-3">
-          Not Registered? <router-link to="/register" class="navbar-brand"><strong>Create an Account</strong></router-link>
-        </div>
-      </form>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { reactive } from 'vue';
 import { useAuthStore } from '@/stores/auth.js';
@@ -64,6 +39,33 @@ async function handleSubmit() {
   }
 }
 </script>
+
+
+<template>
+  <div class="container">
+    <div class="col-md-6">
+      <h3 class="text-center mt-4">Log In</h3>
+      <form @submit.prevent="handleSubmit" class="mt-5">
+        <div class="mb-3">
+          <input type="email" class="form-control" id="Username" placeholder="Email" v-model.trim="formData.email">
+        </div>
+
+        <div class="mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Password" v-model.trim="formData.password">
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-color px-5 w-100">Login</button>
+        </div>
+
+        <div class="form-text text-center mt-3">
+          Not Registered? <router-link to="/register" class="navbar-brand"><strong>Create an Account</strong></router-link>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
 
 <style scoped>
 .container {

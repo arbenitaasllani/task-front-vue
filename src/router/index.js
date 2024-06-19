@@ -6,8 +6,6 @@ import LogInView from "@/views/auth/LogInView.vue";
 import EditTask from "@/components/tasks/EditTask.vue";
 import AddTask from "@/views/AddTask.vue";
 
-
-
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [

@@ -37,9 +37,6 @@ function onLogOut() {
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <span class="navbar-text me-2">{{ authStore.loggedInUser?.email }}</span>
-          </li>
-          <li class="nav-item">
             <button class="btn btn-outline-danger" @click="onLogOut">Log out</button>
           </li>
         </ul>

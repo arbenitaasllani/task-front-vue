@@ -51,4 +51,5 @@ export const useAuthStore = defineStore('auth', () => {
         loggedInUser,
         token,
     };
+
 });

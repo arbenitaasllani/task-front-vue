@@ -1,8 +1,40 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import TaskItem from "@/components/tasks/TaskItem.vue";
+import { taskService } from "@/services/client.js";
+
+const tasks = ref([]);
+const tasksToShow = ref([]);
+
+const fetchTasks = async () => {
+  try {
+    const response = await taskService.getAllTasks();
+    tasks.value = response.data;
+    tasksToShow.value = tasks.value;
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+};
+
+const removeTask = (taskId) => {
+  tasks.value = tasks.value.filter(task => task.id !== taskId);
+  tasksToShow.value = tasksToShow.value.filter(task => task.id !== taskId);
+};
+
+const filterTasks = (status) => {
+  if (status === 'all') {
+    tasksToShow.value = tasks.value;
+  } else if (status === 'not started' || status === 'in progress' || status === 'finished') {
+    tasksToShow.value = tasks.value.filter(task => task.status.toLowerCase() === status);
+  }
+};
+
+onMounted(fetchTasks);
+</script>
+
 <template>
   <div>
     <h3 class="text-center mt-4">Tasks</h3>
-
-    <!-- Filter buttons -->
     <div class="container mt-4">
       <div class="row mb-3">
         <div class="col-md-3">
@@ -20,7 +52,6 @@
       </div>
     </div>
 
-    <!-- Task list -->
     <div v-if="tasksToShow.length === 0">Loading...</div>
     <div class="container mt-4" v-else>
       <div class="row">
@@ -32,39 +63,7 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import TaskItem from "@/components/tasks/TaskItem.vue";
-import { taskService } from "@/services/client.js";
 
-const tasks = ref([]);
-const tasksToShow = ref([]);
-
-const fetchTasks = async () => {
-  try {
-    const response = await taskService.getAllTasks();
-    tasks.value = response.data;
-    tasksToShow.value = tasks.value; // Initially show all tasks
-  } catch (error) {
-    console.error('Error fetching tasks:', error);
-  }
-};
-
-const removeTask = (taskId) => {
-  tasks.value = tasks.value.filter(task => task.id !== taskId);
-  tasksToShow.value = tasksToShow.value.filter(task => task.id !== taskId);
-};
-
-const filterTasks = (status) => {
-  if (status === 'all') {
-    tasksToShow.value = tasks.value; // Show all tasks
-  } else if (status === 'not started' || status === 'in progress' || status === 'finished') {
-    tasksToShow.value = tasks.value.filter(task => task.status.toLowerCase() === status);
-  }
-};
-
-onMounted(fetchTasks);
-</script>
 
 <style scoped>
 .btn-filter {
@@ -72,30 +71,29 @@ onMounted(fetchTasks);
 }
 
 .btn-soft-primary {
-  background-color: #81ceef; /* Soft blue */
+  background-color: #81ceef;
   border-color: #e3f2fd;
-  color: #053f9a; /* Soft blue */
+  color: #053f9a;
 }
 
 .not-started {
-  background-color: #f8a2a2; /* Light red */
+  background-color: #f8a2a2;
   border-color: #ffb3b3;
-  color: #9b0000; /* Light red */
+  color: #9b0000;
 }
 
 .in-progress {
-  background-color: #ffe066; /* Light yellow */
+  background-color: #ffe066;
   border-color: #ffe066;
-  color: #b49700; /* Light yellow */
+  color: #b49700;
 }
 
 .finished {
-  background-color: #89da8b; /* Light green */
+  background-color: #89da8b;
   border-color: #b3ffb3;
-  color: #0c6000; /* Light green */
+  color: #0c6000;
 }
 
-/* Disable hover effect */
 .btn-filter:hover {
   background-color: inherit !important;
   border-color: inherit !important;
